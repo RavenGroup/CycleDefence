@@ -1,4 +1,8 @@
 #include <LGPS.h>
+#include <LSD.h>
+#include <LStorage.h>
+
+#define drv LSD
 
 gpsSentenceInfoStruct info;
 char buff[256];
@@ -29,8 +33,7 @@ static double getDoubleNumber(const char *s) {
   return rev;
 }
 
-static double getIntNumber(const char *s)
-{
+static double getIntNumber(const char *s) {
   char buf[10];
   unsigned char i;
   double rev;
@@ -43,33 +46,7 @@ static double getIntNumber(const char *s)
   return rev;
 }
 
-void parseGPGGA(const char* GPGGAstr)
-{
-  /* Refer to http://www.gpsinformation.org/dale/nmea.htm#GGA
-     Sample data: $GPGGA,123519,4807.038,N,01131.000,E,1,08,0.9,545.4,M,46.9,M,,*47
-     Where:
-      GGA          Global Positioning System Fix Data
-      123519       Fix taken at 12:35:19 UTC
-      4807.038,N   Latitude 48 deg 07.038' N
-      01131.000,E  Longitude 11 deg 31.000' E
-      1            Fix quality: 0 = invalid
-                                1 = GPS fix (SPS)
-                                2 = DGPS fix
-                                3 = PPS fix
-                                4 = Real Time Kinematic
-                                5 = Float RTK
-                                6 = estimated (dead reckoning) (2.3 feature)
-                                7 = Manual input mode
-                                8 = Simulation mode
-      08           Number of satellites being tracked
-      0.9          Horizontal dilution of position
-      545.4,M      Altitude, Meters, above mean sea level
-      46.9,M       Height of geoid (mean sea level) above WGS84
-                       ellipsoid
-      (empty field) time in seconds since last DGPS update
-      (empty field) DGPS station ID number
-   *  *47          the checksum data, always begins with *
-  */
+int parseGPGGA(const char* GPGGAstr) {
   double latitude;
   double longitude;
   int tmp, hour, minute, second, num ;
@@ -94,27 +71,38 @@ void parseGPGGA(const char* GPGGAstr)
     num = getIntNumber(&GPGGAstr[tmp]);
     sprintf(buff, "satellites number = %d", num);
     Serial.println(buff);
+    return num;
   }
   else
   {
     Serial.println("Not get data");
+    return -1;
   }
 }
 
 void setup() {
-  // put your setup code here, to run once:
-  Serial.begin(115200);
+  // Serial.begin(115200);
+  pinMode(13, OUTPUT);
+  digitalWrite(13, LOW);
   LGPS.powerOn();
-  Serial.println("LGPS Power on, and waiting ...");
-  delay(3000);
+  drv.begin();
+  LFile file = drv.open("data.txt", FILE_WRITE);
+  char *data;
+  // Serial.println("LGPS Power on, and waiting ...");
+  // delay(3000);
+  for (byte i = 0; i < 8 * 60; i++) {
+    // Serial.println("LGPS loop");
+    LGPS.getData(&info);
+    data = (char*)info.GPGGA;
+    // Serial.println(data);
+    if (parseGPGGA((const char*)info.GPGGA) > 0)
+      digitalWrite(13, HIGH);
+    file.println(data);
+    // Serial.print("\n\n\n");
+    delay(60000);
+  }
+  file.close();
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-  Serial.print("\n\n\n");
-  Serial.println("LGPS loop");
-  LGPS.getData(&info);
-  Serial.println((char*)info.GPGGA);
-  parseGPGGA((const char*)info.GPGGA);
-  delay(2000);
 }

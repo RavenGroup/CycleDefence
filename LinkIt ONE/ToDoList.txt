@@ -1,0 +1,2 @@
+ToDoList where will be desscribe all plans about working with LinkIt One and a bit later with Stm32.
+

@@ -1,5 +1,5 @@
-#ifndef parse_h
-#define parse_h
+#ifndef Parse_h
+#define Parse_h
 #include <Arduino.h>
 
 static unsigned char getComma(unsigned char, const char *);

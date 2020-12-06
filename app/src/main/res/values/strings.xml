@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Prototype 0.1</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="log_in">log_in</string>
+    <string name="log_out">log_out</string>
+
+    <string name="hello_first_fragment">Welcome!</string>
+    <string name="product_name">Cycle Defence</string>
+
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="default_data">Nothing yet :(</string>
+    <string name="refresh_txt">refresh</string>
+</resources>

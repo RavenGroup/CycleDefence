@@ -9,7 +9,7 @@
 class BlackBox {
   public:
     void begin(void);
-    void writeData(char *);
+    void writeData(char * data);
 };
 
 #endif

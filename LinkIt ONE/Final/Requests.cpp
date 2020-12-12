@@ -6,25 +6,23 @@ void Request::begin() {
 }
 
 
-void Request::connect_to_wifi(char *wifi_ap, String wifi_password) {
-  if (Serial)
-    Serial.println("Connecting to AP");
-  while (0 == LWiFi.connect(wifi_ap, LWiFiLoginInfo(LWIFI_WPA, wifi_password))) {
+byte Request::connect_to_wifi(char *wifi_ap, String wifi_password, int retries) {
+  for (int iter = 0; iter < retries; iter++) {
+    if (0 != LWiFi.connect(wifi_ap, LWiFiLoginInfo(LWIFI_WPA, wifi_password)))
+      return 0;
     delay(1000);
   }
-  if (Serial)
-      Serial.println("Done");
+  return 1;
 }
 
 
-void Request::connect_to_server(char *server_url, unsigned short port) {
-  if (Serial)
-    Serial.println("Connecting to WebSite");
-  while (0 == client.connect(server_url, 80)) {
-    if (Serial)
-      Serial.println("Re-Connecting to WebSite");
+byte Request::connect_to_server(char *server_url, unsigned short port, int retries) {
+  for (int iter = 0; iter < retries; iter++) {
+    if (0 != client.connect(server_url, 80))
+      return 0;
     delay(1000);
   }
+  return 1;
 }
 
 
@@ -32,7 +30,7 @@ String Request::send_post(char *server_url, String data) {
   if (Serial)
     Serial.println("send HTTP POST request");
   
-  client.println("POST / HTTP/1.1");
+  client.println("POST /CDSystem HTTP/1.1");
   char host[32];
   sprintf(host, "Host: %s", server_url);
   client.println(host);
@@ -70,4 +68,6 @@ String Request::send_post(char *server_url, String data) {
   }
   Serial.println();
   Serial.println("disconnected by server");
+  
+  return response;
 }

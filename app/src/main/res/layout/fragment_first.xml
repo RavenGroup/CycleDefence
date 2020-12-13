@@ -35,13 +35,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="45dp"
         android:ems="10"
+        android:hint="@string/DEV"
+        android:importantForAutofill="no"
         android:inputType="textPersonName"
         android:text="@string/ip_address"
-        android:hint="@string/DEV"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4"
-        android:importantForAutofill="no" />
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <EditText
         android:id="@+id/user_id_te"
@@ -49,16 +49,16 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="62dp"
         android:ems="10"
+        android:hint="@string/DEV"
+        android:importantForAutofill="no"
         android:inputType="textPersonName"
         android:text="@string/user_id"
-        android:hint="@string/DEV"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ip_address_te"
-        android:importantForAutofill="no" />
+        app:layout_constraintTop_toBottomOf="@+id/ip_address_te" />
 
     <Button
-        android:id="@+id/button_first"
+        android:id="@+id/log_in_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="104dp"

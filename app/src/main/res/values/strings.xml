@@ -13,7 +13,7 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="default_data">Nothing yet :(</string>
     <string name="refresh_txt">refresh</string>
-    <string name="ip_address">ip address</string>
-    <string name="user_id">user id</string>
+    <string name="ip_address">128.75.198.121</string>
+    <string name="user_id">1</string>
     <string name="DEV">IN DEVELOPMENT</string>
 </resources>

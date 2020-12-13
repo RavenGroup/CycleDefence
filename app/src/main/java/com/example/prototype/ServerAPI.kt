@@ -14,29 +14,39 @@ import kotlinx.coroutines.*
 
 // Base exception for catching all errors
 import java.lang.Exception
+import kotlin.reflect.typeOf
 
 
 class ServerAPI() {
-    private val url: String = "https://google.com"
+    private var url: String = "http://128.75.198.121/MobileApp"
+    private var id: String = "1"
 
-    //    "http://128.75.198.121"
+    // TODO: 13.12.20 rework or delete this in production
+    fun setId(id: String) {
+        this.id = id
+    }
+    fun setUrl(url:String){
+        this.url = "http://$url/MobileApp"
+    }
+    // end of delete
+
     private suspend fun urlRequest(): String {
         var result: String
         try {
             withContext(Dispatchers.IO) {
                 val request = POST(
-                    url = "http://128.75.198.121/MobileApp",
-                    json = mapOf("id" to "1", "userType" to "mobileApp")
+                        url = url,
+                        json = mapOf("id" to id)
                 )
                 Log.d(
-                    "ServerAPI", request.statusCode.toString()
+                        "ServerAPI", request.statusCode.toString()
                 )
                 Log.d("ServerAPI", request.text)
                 result = request.text
             }
         } catch (e: Exception) {
             Log.e("ServerAPI", e.toString())
-            result = "ERROR"
+            result = e.message.toString()
         }
 
         return result
@@ -50,4 +60,7 @@ class ServerAPI() {
 
     }
 
+    companion object {
+        val instance = ServerAPI()
+    }
 }

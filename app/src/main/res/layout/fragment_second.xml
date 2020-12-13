@@ -10,14 +10,13 @@
         android:id="@+id/data_output"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:singleLine="false"
         android:text="@string/default_data"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.17"
-        android:singleLine="false"
-        />
+        app:layout_constraintVertical_bias="0.17" />
 
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -41,9 +40,9 @@
 
         <Button
             android:id="@+id/log_out_btn"
-            android:layout_marginStart="10dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
             android:text="@string/log_out" />
     </LinearLayout>
 

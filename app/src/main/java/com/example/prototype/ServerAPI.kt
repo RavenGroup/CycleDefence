@@ -43,7 +43,7 @@ class ServerAPI() {
     }
 
 
-    fun getData(tv: TextView) {
+    fun setData(tv: TextView) {
         GlobalScope.launch(Dispatchers.Main) {
             tv.setText(urlRequest())
         }

@@ -29,7 +29,7 @@ class SecondFragment : Fragment() {
             findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
         }
         refresh_btn.setOnClickListener {
-            ServerAPI.instance.setData(data_output)
+            ServerAPI.instance.setData(dataOutput)
         }
 
     }

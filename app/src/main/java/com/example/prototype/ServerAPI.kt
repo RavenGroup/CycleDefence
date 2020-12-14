@@ -11,12 +11,12 @@ import khttp.post as POST
 
 // coroutines for asynchronous http requests
 import kotlinx.coroutines.*
+// JSON parser
 import org.json.JSONObject
 
 
 // Base exception for catching all errors
 import java.lang.Exception
-import kotlin.reflect.typeOf
 
 
 class ServerAPI() {
@@ -42,10 +42,6 @@ class ServerAPI() {
                         url = url,
                         json = mapOf("id" to id)
                 )
-                Log.d(
-                        "ServerAPI", request.statusCode.toString()
-                )
-                Log.d("ServerAPI", request.text)
                 result = request.text
             }
         } catch (e: Exception) {
@@ -56,19 +52,30 @@ class ServerAPI() {
         return result
     }
 
-
     fun setData(layout: LinearLayout) {
         GlobalScope.launch(Dispatchers.Main) {
-//            var layout: LinearLayout = LinearLayout(layout.context)
             layout.removeAllViews()
             var tv: TextView
+            var layoutHorisontal: LinearLayout
             try {
                 val json = JSONObject(urlRequest())
+//                /*
                 for (i in json.keys()) {
-                    tv = TextView(layout.context)
-                    tv.setText(json[i].toString())
-                    layout.addView(tv)
+                    layoutHorisontal = LinearLayout(layout.context)
+                    layoutHorisontal.orientation = LinearLayout.HORIZONTAL
+                    val currentData = json.getJSONObject(i)
+                    for (key in currentData.keys()) {
+                        tv = TextView(layout.context)
+                        tv.setPaddingRelative(20, 0, 0, 10)
+                        tv.setText(currentData[key].toString())
+                        layoutHorisontal.addView(tv)
+                    }
+
+
+                    layout.addView(layoutHorisontal)
                 }
+//                */
+
             } catch (e: Exception) {
                 Log.e("ServerAPI/setData", e.toString())
                 tv = TextView(layout.context)

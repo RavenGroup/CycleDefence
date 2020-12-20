@@ -7,10 +7,11 @@
     <string name="log_in">log_in</string>
     <string name="log_out">log_out</string>
 
-    <string name="hello_first_fragment">Welcome!</string>
     <string name="product_name">Cycle Defence</string>
 
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="default_data">Nothing yet :(</string>
     <string name="refresh_txt">refresh</string>
+    <string name="ip_address">http://128.75.198.121/MobileApp</string>
+    <string name="user_id">1</string>
+    <string name="DEV">IN DEVELOPMENT</string>
 </resources>

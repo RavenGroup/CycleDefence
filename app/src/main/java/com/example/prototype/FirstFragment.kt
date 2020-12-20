@@ -23,8 +23,13 @@ class FirstFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view.findViewById<Button>(R.id.log_in_btn).setOnClickListener {
+        log_in_btn.setOnClickListener {
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+            ServerAPI.instance.setId(user_id_te.text.toString())
+            ServerAPI.instance.setUrl(ip_address_te.text.toString())
+        }
+        showMap.setOnClickListener {
+            findNavController().navigate(R.id.action_FirstFragment_to_MapFragment)
             ServerAPI.instance.setId(user_id_te.text.toString())
             ServerAPI.instance.setUrl(ip_address_te.text.toString())
         }

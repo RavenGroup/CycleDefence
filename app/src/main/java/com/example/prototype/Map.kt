@@ -1,35 +1,68 @@
 package com.example.prototype
 
+import android.graphics.Color
 import androidx.fragment.app.Fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
 import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
+import java.lang.Exception
 
-class Map : Fragment() {
+class mapFragment : Fragment() {
+    //    private var places: Map<String> =
+
 
     private val callback = OnMapReadyCallback { googleMap ->
-        /**
-         * Manipulates the map once available.
-         * This callback is triggered when the map is ready to be used.
-         * This is where we can add markers or lines, add listeners or move the camera.
-         * In this case, we just add a marker near Sydney, Australia.
-         * If Google Play services is not installed on the device, the user will be prompted to
-         * install it inside the SupportMapFragment. This method will only be triggered once the
-         * user has installed Google Play services and returned to the app.
-         */
-        val sydney = LatLng(-34.0, 151.0)
-        googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        try {
+            ServerAPI.instance.drawMap()
+        } catch (e: Exception) {
+            Log.d("Map/Server", e.toString())
+        }
+        Log.d("Map/places", ServerAPI.instance.places.toString())
+        val polylineOptions = PolylineOptions()
+
+        for (i in ServerAPI.instance.places.keys) {
+            polylineOptions.add(
+                LatLng(
+                    ServerAPI.instance.places[i]?.get("lat")?.toDouble() ?: 0.0,
+                    ServerAPI.instance.places[i]?.get("long")?.toDouble() ?: 0.0
+                )
+            )
+            googleMap.moveCamera(
+                CameraUpdateFactory.newLatLng(
+                    LatLng(
+                        ServerAPI.instance.places[i]?.get("lat")?.toDouble() ?: 0.0,
+                        ServerAPI.instance.places[i]?.get("long")?.toDouble() ?: 0.0
+                    )
+                )
+            )
+            googleMap.moveCamera(CameraUpdateFactory.zoomTo(15f))
+
+        }
+        val polyline = googleMap.addPolyline(
+            polylineOptions.color(Color.BLUE).width(3f)
+        )
+        polyline.startCap = RoundCap()
+        polyline.endCap = RoundCap()
+
+
+//            Log.d("Map/Draw", place.toString())
+/*
+            googleMap.addMarker(
+                MarkerOptions().position(place)
+                    .title(ServerAPI.instance.places[i]?.get("time") ?: "Where are you?")
+                    .zIndex((0.001 * i.toInt()).toFloat())
+            )
+ */
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,4 +77,5 @@ class Map : Fragment() {
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
     }
+
 }

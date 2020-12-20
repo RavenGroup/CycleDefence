@@ -19,9 +19,11 @@ import org.json.JSONObject
 import java.lang.Exception
 
 
-class ServerAPI() {
+class ServerAPI {
     private var url: String = "http://128.75.198.121/MobileApp"
-    private var id: String = "1"
+    private var id: String = "4"
+    var places = emptyMap<String, Map<String, String>>().toMutableMap()
+
 
     // TODO: 13.12.20 rework or delete this in production
     fun setId(id: String) {
@@ -39,8 +41,8 @@ class ServerAPI() {
         try {
             withContext(Dispatchers.IO) {
                 val request = POST(
-                        url = url,
-                        json = mapOf("id" to id)
+                    url = url,
+                    json = mapOf("id" to id)
                 )
                 result = request.text
             }
@@ -53,42 +55,67 @@ class ServerAPI() {
     }
 
     fun setData(layout: LinearLayout) {
-        GlobalScope.launch(Dispatchers.Main) {
-            layout.removeAllViews()
-            var tv: TextView
-            var layoutHorisontal: LinearLayout
-            try {
-                val json = JSONObject(urlRequest())
-//                /*
-                for (i in json.keys()) {
-                    layoutHorisontal = LinearLayout(layout.context)
-                    layoutHorisontal.orientation = LinearLayout.HORIZONTAL
-                    val currentData = json.getJSONObject(i)
-                    for (key in currentData.keys()) {
+        drawMap()
+        layout.removeAllViews()
+        var tv: TextView
+        var layoutHorisontal: LinearLayout
+        try {
+            for (i in places.keys) {
+                layoutHorisontal = LinearLayout(layout.context)
+                layoutHorisontal.orientation = LinearLayout.HORIZONTAL
+                val currentData = places[i]
+                if (currentData != null) {
+                    for (key in currentData.keys) {
                         tv = TextView(layout.context)
                         tv.setPaddingRelative(20, 0, 0, 10)
-                        tv.setText(currentData[key].toString())
+                        tv.text = currentData[key].toString()
                         layoutHorisontal.addView(tv)
                     }
-
-
-                    layout.addView(layoutHorisontal)
                 }
+
+
+                layout.addView(layoutHorisontal)
+            }
 //                */
 
+        } catch (e: Exception) {
+            Log.e("ServerAPI/setData", e.toString())
+            tv = TextView(layout.context)
+            tv.text = e.cause.toString()
+            layout.addView(tv)
+        }
+
+
+    }
+
+    fun drawMap() {
+
+        GlobalScope.launch(Dispatchers.IO) {
+            try {
+                val json = JSONObject(urlRequest())
+                var place: JSONObject
+                for (i in json.keys()) {
+                    place = json.getJSONObject(i)
+                    places[i] = mapOf(
+                        "time" to place["time"].toString(),
+                        "lat" to place["lat"].toString(),
+                        "long" to place["long"].toString()
+                    )
+                }
+                Log.d("ServerAPI/drawMap", "$id $places")
             } catch (e: Exception) {
-                Log.e("ServerAPI/setData", e.toString())
-                tv = TextView(layout.context)
-                tv.setText(e.cause.toString())
-                layout.addView(tv)
+                places.clear()
+                places["1"] = mapOf("error" to "ERROR")
+                Log.e("ServerAPI/drawMap", e.toString())
             }
 
 
         }
-
     }
+
 
     companion object {
         val instance = ServerAPI()
     }
+
 }

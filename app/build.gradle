@@ -43,7 +43,8 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.2.2'
     implementation 'androidx.navigation:navigation-ui-ktx:2.2.2'
     implementation 'org.danilopianini:khttp:0.1.0-dev1u+b23a8f7' // khttp module
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9' // coroutines module
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9'
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'// coroutines module
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'

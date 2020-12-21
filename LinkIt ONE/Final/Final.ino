@@ -4,6 +4,7 @@
 #include "BlackBox.h"
 #include "Converter.h"
 #include "Requests.h"
+#include "GPRMCparser.h"
 
 
 BlackBox black_box;
@@ -33,7 +34,10 @@ void setup() {
     Serial.println("Success");
     have_inet_access = 1;
   }
+}
 
+
+void loop() {
   if (have_inet_access) {
     Serial.println("Connect to server");
     
@@ -45,23 +49,31 @@ void setup() {
       Serial.println("Success");
     }
   }
-}
-
-
-void loop() {
+  
   LGPS.getData(&info);
   Serial.println("Getted data");
+  Serial.println((char *)info.GPGSA);
+  String parsed[15];
+  GPRMC((char *)info.GPRMC, parsed);
 
-  data[0] = "id";
+  data[0] = "system_id";
   data[1] = "2454";
-  data[2] = "data";
-  data[3] = String((char *)info.GPGGA);
-  data[3].trim();
-  data[4] = "userType";
-  data[5] = "CDSystem";
+  data[2] = "time";
+  data[3] = (String)parsed[1];
+  data[4] = "latitude";
+  data[5] = (String)parsed[3] + (String)parsed[4];
+  data[6] = "longitude";
+  data[7] = (String)parsed[5] + (String)parsed[6];
+  data[8] = "date";
+  data[9] = (String)parsed[9];
+  data[10] = "temperature";
+  data[11] = "0";
+
+  Serial.println(distributor(data, 12));
+  
 
   Serial.println("---------- Black Box ----------");
-  if (!black_box.writeData((char *)info.GPGGA))
+  if (!black_box.writeData((char *)info.GPRMC))
     Serial.println("Writed data");
   else
     Serial.println("Dont saved data");
@@ -69,7 +81,7 @@ void loop() {
 
   if (have_server_connection) {
     String res = "";
-    res = req.send_post(url, distributor(data, 6));
+    res = req.send_post(url, distributor(data, 12));
     Serial.println("---------- Response ----------");
     Serial.println(res);
     Serial.println("---------- End ----------\n");
@@ -82,7 +94,7 @@ void loop() {
   Serial.println(buff);
   Serial.println("---------- End ----------\n");
 
-  Serial.println("Waitting for 30 seconds");
+  Serial.println("Waitting for 60 seconds");
 
-  delay(30000);
+  delay(60000);
 }

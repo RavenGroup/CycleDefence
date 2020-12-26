@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CycleDefence</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+</head>
+<body>
+<header>
+    <div id="panel-top">
+        <a href="/home"><img id="logo" src="../static/img/prot-23.png"></a>
+        <a href="/home"><div id="title">CycleDefence</div></a>
+        <a class="vert-cent" href="/contacts"><button class="buttons_top">Contacts</button></a>
+        <a class="vert-cent" href="/about"><button class="buttons_top">About Us</button></a>
+        <a class="vert-cent" href="/home"><button class="buttons_top">Main Page</button></a>
+    </div>
+    <div>
+    </div>
+</header>
+<div>
+    {% block body %}{% endblock %}
+</div>
+<footer>
+
+</footer>
+</body>
+</html>

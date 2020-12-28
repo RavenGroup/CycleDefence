@@ -8,7 +8,13 @@
     padding: 0;
     margin: 0;
     font-family: 'Source Sans Pro', sans-serif;
-    background-color: white;
+}
+
+body {
+    background-image: url("../img/back-1.png");
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
 }
 
 #logo {
@@ -33,16 +39,8 @@
     width: 100%;
     float: left;
     line-height: 10%;
-    margin-bottom: 3%;
-
-}
-
-.lorem {
-    padding-top: 1%;
-    border-radius: 10px;
-    font-size: 32px;
-    font-weight: bold;
-    float: left;
+    margin-bottom: 2%;
+    position: fixed;
 }
 
 #title {
@@ -68,7 +66,8 @@
 }
 
 .title-page {
-    margin-bottom: 1%;
+    padding-top: 7%;
+    margin-bottom: 2%;
     text-align: center;
     font-size: 40px;
     font-weight: bold;
@@ -80,35 +79,17 @@
     /*text-shadow: 0 0 5px white;*/
 }
 
-.vert-cent {
-    display: block;
+.just-text {
+    margin: 0 30% 2% 30%;
+    font-size: 30px;
+    text-align: center;
 }
 
-#logo-home {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    height: 25%;
-    width: 25%;
-    float: left;
-}
-#shel {
-    float: left;
-    display: block;
-    alignment: center;
-    margin-left: auto;
-    margin-right: auto
+.link-without-effects {
+    text-decoration: none;
 }
 
-.side-text {
-    float: left;
-    display: block;
-    width: 15%;
-    margin-top: 3.8%;
+.link-without-effects:visited {
+    color: black;
+    text-underline-mode: none;
 }
-
-#empty {
-    padding: 14%;
-    float: left;
-}
-

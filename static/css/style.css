@@ -11,7 +11,7 @@
 }
 
 body {
-    background-image: url("../img/back-1.png");
+    background-image: url("../img/back-2.png");
     background-attachment: fixed;
     background-position: center;
     background-size: cover;
@@ -66,7 +66,7 @@ body {
 }
 
 .title-page {
-    padding-top: 7%;
+    padding-top: 12%;
     margin-bottom: 2%;
     text-align: center;
     font-size: 40px;
@@ -80,7 +80,7 @@ body {
 }
 
 .just-text {
-    margin: 0 30% 2% 30%;
+    margin: 0 3% 2% 3%;
     font-size: 30px;
     text-align: center;
 }
@@ -92,4 +92,10 @@ body {
 .link-without-effects:visited {
     color: black;
     text-underline-mode: none;
+}
+
+.cloud-box {
+    margin-left: 24%;
+    margin-right: 24%;
+
 }

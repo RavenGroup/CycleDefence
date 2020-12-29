@@ -6,25 +6,94 @@
     <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
 </head>
 <body>
+
 <div class="backgr"></div>
 <header>
     <div id="panel-top">
+{#        <a onclick="" href="/home"><img id="logo" src="../static/img/prot-23.png"></a>#}
+{#        <a href="/home"><div id="title">CycleDefence</div></a>#}
+{#        <a class="vert-cent"><button onclick="another_page(this)" value="do" class="buttons_top">Contacts</button></a>#}
+{#        <a class="vert-cent" href="/about"><button onclick="another_page(this)" value="do" class="buttons_top">About Us</button></a>#}
+{#        <a class="vert-cent" onclick="slow_link_to_home()"><button onclick="another_page(this)" value="do" class="buttons_top">Main Page</button></a>#}
         <a href="/home"><img id="logo" src="../static/img/prot-23.png"></a>
         <a href="/home"><div id="title">CycleDefence</div></a>
-        <a class="vert-cent" href="/contacts"><button class="buttons_top">Contacts</button></a>
-        <a class="vert-cent" href="/about"><button class="buttons_top">About Us</button></a>
-        <a class="vert-cent" href="/home"><button class="buttons_top">Main Page</button></a>
+        <a href="/contacts" class="vert-cent"><button class="buttons_top">Contacts</button></a>
+        <a href="/about" class="vert-cent"><button class="buttons_top">About Us</button></a>
+        <a href="/home" class="vert-cent"><button class="buttons_top">Main Page</button></a>
     </div>
     <div>
     </div>
 </header>
 <div>
-    <div class="cloud-box">
-        {% block body %}{% endblock %}
-    </div>
+    {% block body %}{% endblock %}
 </div>
 <footer>
 
 </footer>
+<script src="https://unpkg.com/popmotion/dist/popmotion.global.min.js"></script>
+<script>
+    const cloud = popmotion.styler(document.querySelector('.cloud-box'))
+    const title = popmotion.styler(document.querySelector('.cloud-title'))
+
+    popmotion.tween({
+        from: {
+            {#scale: 0,#}
+            opacity: 0
+        },
+        to: {
+            {#scale: 1,#}
+            opacity: 1
+        },
+        duration: 2000
+    }).start(title.set)
+
+
+    popmotion.tween({
+        from: {
+            scale: 0,
+            opacity: 0
+        },
+        to: {
+            scale: 1,
+            opacity: 1
+        },
+        duration: 300
+    }).start(cloud.set)
+
+    {#const jump = popmotion.styler(document.queryCommandValue('another_page'))#}
+
+{#
+    function another_page(el) {
+       const behaviour = el.getAttribute('value');
+       if (behaviour === "do") {
+           popmotion.tween({
+               from: {
+                   scale: 1,
+                   opacity: 1
+               },
+               to: {
+                   scale: 0,
+                   opacity: 0
+               },
+               duration: 500
+           }).start(cloud.set)
+       }
+    }
+#}
+{#
+
+    First_animation.start({
+        update: cloud.set,
+        complete: () => { another_page() }
+    })
+
+    function slow_link_to_home(el) {
+        const local_link = '/home'
+        setTimeout(() => { document.getElementById("Link").setAttribute("href",local_link); }, 600)
+    }
+#}
+
+
+</script>
 </body>
 </html>

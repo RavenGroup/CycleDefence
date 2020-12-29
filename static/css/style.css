@@ -5,13 +5,14 @@
 /*ALL*/
 
 * {
+    background-color: rgb(235, 235, 235);
     padding: 0;
     margin: 0;
     font-family: 'Source Sans Pro', sans-serif;
 }
 
 body {
-    background-image: url("../img/back-2.png");
+    /*background-image: url("../img/back-2.png");*/
     background-attachment: fixed;
     background-position: center;
     background-size: cover;
@@ -39,8 +40,8 @@ body {
     width: 100%;
     float: left;
     line-height: 10%;
-    margin-bottom: 2%;
-    position: fixed;
+    margin-bottom: 1%;
+    /*position: fixed;*/
 }
 
 #title {
@@ -66,12 +67,12 @@ body {
 }
 
 .title-page {
-    padding-top: 12%;
     margin-bottom: 2%;
     text-align: center;
     font-size: 40px;
     font-weight: bold;
     font-family: 'Nova Flat', cursive;
+    text-decoration: underline;
 }
 
 .buttons_top:hover {
@@ -80,13 +81,15 @@ body {
 }
 
 .just-text {
-    margin: 0 3% 2% 3%;
+    margin: 3% 3% 2% 3%;
     font-size: 30px;
     text-align: center;
+    background-color: white;
 }
 
 .link-without-effects {
     text-decoration: none;
+    background-color: white;
 }
 
 .link-without-effects:visited {
@@ -97,5 +100,17 @@ body {
 .cloud-box {
     margin-left: 24%;
     margin-right: 24%;
-
+    background-color: white;
+    border-radius: 5px;
+    margin-bottom: 2%;
+    padding: 10px;
 }
+
+.local-title {
+    font-family: 'Nova Flat', cursive;
+    background-color: white;
+}
+
+/*#Link {*/
+/*    display: none;*/
+/*}*/

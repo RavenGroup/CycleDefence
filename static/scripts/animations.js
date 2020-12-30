@@ -1,3 +1,12 @@
+// async function linkToA() {
+//     setTimeout(hrefLink, 3000)
+// }
+//
+// function hrefLink() {
+//     const lin = document.getElementById("link-home")
+//     return lin.setAttribute("href", "/home")
+// }
+
 function links_Do(value) {
     const do_or_not = value;
     if (do_or_not === "1") {
@@ -11,7 +20,7 @@ function links_Do(value) {
                 opacity: 0,
                 backgroundColor: '#ebebeb'
             },
-            duration: 500
+            duration: 300
         }).start(title.set)
 
         popmotion.tween({
@@ -25,7 +34,7 @@ function links_Do(value) {
                 y: -150,
                 opacity: 0
             },
-            duration: 500
+            duration: 300
         }).start(header.set)
 
         popmotion.tween({
@@ -37,7 +46,7 @@ function links_Do(value) {
                 backgroundColor: '#ebebeb',
                 opacity: 0
             },
-            duration: 500
+            duration: 300
         }).start(cloud.set)
     }
 }
@@ -45,20 +54,17 @@ function links_Do(value) {
 const cloud = popmotion.styler(document.querySelector('.cloud-box'))
 const title = popmotion.styler(document.querySelector('.title-page'))
 const header = popmotion.styler(document.querySelector('header'))
-const justtext = popmotion.styler(document.querySelector('.just-text'))
+const body = popmotion.styler(document.querySelector('body'))
 
 popmotion.tween({
     from: {
-        color: '#ebebeb',
-        backgroundColor: '#ebebeb'
+        opacity: 0
     },
     to: {
-        color: '#000',
-        backgroundColor: '#fff'
+        opacity: 1
     },
-    duration: 500
-}).start(justtext.set)
-
+    duration: 100
+}).start(body.set)
 
 popmotion.tween({
     from: {
@@ -69,7 +75,7 @@ popmotion.tween({
         opacity: 1,
         backgroundColor: '#fff'
     },
-    duration: 500
+    duration: 300
 }).start(title.set)
 
 popmotion.tween({
@@ -85,7 +91,7 @@ popmotion.tween({
         y: 0,
         opacity: 1
     },
-    duration: 500
+    duration: 300
 }).start(header.set)
 
 popmotion.tween({
@@ -99,5 +105,5 @@ popmotion.tween({
         // {#x: 0,#}
         opacity: 1
     },
-    duration: 500
+    duration: 300
 }).start(cloud.set)

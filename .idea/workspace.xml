@@ -2,13 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6a50bba6-0341-404f-b909-b24c2c97ca07" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/static/scripts/animations.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/animations.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/old_stuff/extend-1.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/old_stuff/extend-2.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/old_stuff/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/old_stuff/mainPage.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/old_stuff/oldHeader1.html" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/scripts/animations.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/scripts/animations.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/aboutPage.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/aboutPage.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/foundation.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/foundation.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/homePage.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/homePage.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/messageForm.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/messageForm.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,13 +65,15 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="class" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -109,7 +116,8 @@
       <workItem from="1609268078167" duration="18000" />
       <workItem from="1609268109712" duration="4295000" />
       <workItem from="1609276889657" duration="5719000" />
-      <workItem from="1609324822346" duration="9206000" />
+      <workItem from="1609324822346" duration="10107000" />
+      <workItem from="1609347501122" duration="5400000" />
     </task>
     <servers />
   </component>
@@ -133,6 +141,6 @@
     <select />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/CycleDefence$CycleDefence.coverage" NAME="CycleDefence Coverage Results" MODIFIED="1609341554091" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/CycleDefence$CycleDefence.coverage" NAME="CycleDefence Coverage Results" MODIFIED="1609352909567" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
 </project>

@@ -16,6 +16,7 @@ body {
     background-attachment: fixed;
     background-position: center;
     background-size: cover;
+    opacity: 0;
 }
 
 #logo {
@@ -41,7 +42,6 @@ body {
     float: left;
     line-height: 10%;
     margin-bottom: 0;
-    /*position: fixed;*/
 }
 
 #title {
@@ -67,6 +67,7 @@ body {
 }
 
 .title-page {
+    opacity: 0;
     display: block;
     margin-bottom: 3%;
     text-align: center;
@@ -89,7 +90,6 @@ body {
     font-size: 30px;
     text-align: center;
     background-color: white;
-    color: rgb(235, 235, 235);
 }
 
 .link-without-effects {
@@ -122,4 +122,14 @@ body {
 
 .cloud-title {
     margin: 0 35% 1%;
+}
+
+header {
+    opacity: 0;
+}
+
+.button-raven {
+    border: none;
+    background-color: white;
+    font-size: 30px;
 }

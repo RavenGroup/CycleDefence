@@ -1,25 +1,28 @@
 from flask import Flask, render_template
-
-import time
+import asyncio
 
 app = Flask(__name__)
 
 
+async def timeout():
+    await asyncio.sleep(0.2)
+
+
 @app.route("/home")
 def main_p():
-    time.sleep(0.2)
+    asyncio.run(timeout())
     return render_template("homePage.html")
 
 
 @app.route("/about")
 def about_p():
-    time.sleep(0.2)
+    asyncio.run(timeout())
     return render_template("aboutPage.html")
 
 
 @app.route("/contacts")
 def message_p():
-    time.sleep(0.2)
+    asyncio.run(timeout())
     return render_template("messageForm.html")
 
 

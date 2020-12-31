@@ -1,54 +1,53 @@
-// async function linkToA() {
-//     setTimeout(hrefLink, 3000)
-// }
-//
-// function hrefLink() {
-//     const lin = document.getElementById("link-home")
-//     return lin.setAttribute("href", "/home")
-// }
+function sleep(milliseconds) {
+    const date = Date.now();
+    let currentDate = null;
+    do {
+        currentDate = Date.now();
+    } while (currentDate - date < milliseconds);
+}
 
-function links_Do(value) {
-    const do_or_not = value;
-    if (do_or_not === "1") {
-        console.log(do_or_not)
-        popmotion.tween({
-            from: {
-                opacity: 1,
-                backgroundColor: '#fff'
-            },
-            to: {
-                opacity: 0,
-                backgroundColor: '#ebebeb'
-            },
-            duration: 300
-        }).start(title.set)
+function stupid_func() {
+    sleep()
+}
 
-        popmotion.tween({
-            from: {
-                backgroundColor: '#00004c',
-                y: 0,
-                opacity: 1
-            },
-            to: {
-                backgroundColor: '#ebebeb',
-                y: -150,
-                opacity: 0
-            },
-            duration: 300
-        }).start(header.set)
+function links_Do() {
+    popmotion.tween({
+        from: {
+            opacity: 1,
+            backgroundColor: '#fff'
+        },
+        to: {
+            opacity: 0,
+            backgroundColor: '#ebebeb'
+        },
+        duration: 300
+    }).start(title.set)
 
-        popmotion.tween({
-            from: {
-                backgroundColor: '#fff',
-                opacity: 1
-            },
-            to: {
-                backgroundColor: '#ebebeb',
-                opacity: 0
-            },
-            duration: 300
-        }).start(cloud.set)
-    }
+    popmotion.tween({
+        from: {
+            backgroundColor: '#00004c',
+            y: 0,
+            opacity: 1
+        },
+        to: {
+            backgroundColor: '#ebebeb',
+            y: -150,
+            opacity: 0
+        },
+        duration: 300
+    }).start(header.set)
+
+    popmotion.tween({
+        from: {
+            backgroundColor: '#fff',
+            opacity: 1
+        },
+        to: {
+            backgroundColor: '#ebebeb',
+            opacity: 0
+        },
+        duration: 300
+    }).start(cloud.set)
 }
 
 const cloud = popmotion.styler(document.querySelector('.cloud-box'))

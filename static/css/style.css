@@ -133,3 +133,24 @@ header {
     background-color: white;
     font-size: 30px;
 }
+
+.img-block-1 {
+    padding: 4%;
+
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    /*justify-content: space-between;*/
+}
+
+.icon_person {
+    border: 2px solid black;
+    margin-right: 4%;
+    flex-basis: 20%;
+}
+
+.description {
+    background-color: white;
+    font-size: 40px;
+}

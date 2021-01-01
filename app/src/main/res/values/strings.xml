@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Prototype 0.1</string>
+    <string name="app_name">Prototype 0.2</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -11,9 +11,11 @@
 
     <string name="default_data">Nothing yet :(</string>
     <string name="refresh_txt">refresh</string>
-    <string name="ip_address">http://128.75.198.121/MobileApp</string>
+    <string name="ip_address">http://128.75.198.121</string>
     <string name="user_id">4</string>
     <string name="DEV">IN DEVELOPMENT</string>
     <string name="showMap">Show map</string>
     <string name="map_fragment_label">Map</string>
+    <string name="turnOn">On</string>
+    <string name="turnOff">Off</string>
 </resources>

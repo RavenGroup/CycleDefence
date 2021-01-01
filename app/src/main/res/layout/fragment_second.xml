@@ -8,13 +8,10 @@
 
     <ScrollView
         android:id="@+id/scrollView3"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="417dp"
+        android:layout_height="478dp"
         android:padding="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        tools:layout_editor_absoluteX="-2dp">
 
         <LinearLayout
             android:id="@+id/dataOutput"
@@ -30,31 +27,61 @@
     </ScrollView>
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
+        android:id="@+id/linearLayout3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="52dp"
-        android:orientation="horizontal"
+        android:layout_marginBottom="16dp"
+        android:orientation="vertical"
         android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <Button
-            android:id="@+id/refresh_btn"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/refresh_txt" />
-
-        <Button
-            android:id="@+id/log_out_btn"
-            style="@style/Widget.AppCompat.Button.Borderless"
+        <LinearLayout
+            android:id="@+id/linearLayout2"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <Button
+                android:id="@+id/refresh_btn"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/refresh_txt" />
+
+            <Button
+                android:id="@+id/log_out_btn"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:text="@string/log_out" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
-            android:text="@string/log_out" />
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/turnSystemOn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:text="@string/turnOn" />
+
+            <Button
+                android:id="@+id/turnSystemOff"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/turnOff" />
+        </LinearLayout>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

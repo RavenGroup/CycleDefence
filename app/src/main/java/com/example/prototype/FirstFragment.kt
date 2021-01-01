@@ -1,11 +1,10 @@
 package com.example.prototype
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_first.*
 
@@ -25,13 +24,13 @@ class FirstFragment : Fragment() {
 
         log_in_btn.setOnClickListener {
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
-            ServerAPI.instance.setId(user_id_te.text.toString())
-            ServerAPI.instance.setUrl(ip_address_te.text.toString())
+            OldServerAPI.instance.setId(user_id_te.text.toString())
+            OldServerAPI.instance.setUrl(ip_address_te.text.toString())
         }
         showMap.setOnClickListener {
             findNavController().navigate(R.id.action_FirstFragment_to_MapFragment)
-            ServerAPI.instance.setId(user_id_te.text.toString())
-            ServerAPI.instance.setUrl(ip_address_te.text.toString())
+            OldServerAPI.instance.setId(user_id_te.text.toString())
+            OldServerAPI.instance.setUrl(ip_address_te.text.toString())
         }
     }
 }

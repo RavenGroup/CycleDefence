@@ -1,53 +1,55 @@
 package com.example.prototype
 
 import android.graphics.Color
-import androidx.fragment.app.Fragment
-
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.*
-import java.lang.Exception
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.PolylineOptions
+import com.google.android.gms.maps.model.RoundCap
 
 class mapFragment : Fragment() {
-    //    private var places: Map<String> =
+    //    private var data: Map<String> =
 
 
     private val callback = OnMapReadyCallback { googleMap ->
         try {
-            ServerAPI.instance.drawMap()
+            OldServerAPI.instance.drawMap()
         } catch (e: Exception) {
             Log.d("Map/Server", e.toString())
         }
-        Log.d("Map/places", ServerAPI.instance.places.toString())
+        Log.d("Map/data", OldServerAPI.instance.data.toString())
         val polylineOptions = PolylineOptions()
 
-        for (i in ServerAPI.instance.places.keys) {
+        for (i in OldServerAPI.instance.data.keys) {
+//            if (ServerAPI.instance.data[i]?.get("gps_acc").toString() == "V"){
+//                continue
+//            }
             polylineOptions.add(
                 LatLng(
-                    ServerAPI.instance.places[i]?.get("lat")?.toDouble() ?: 0.0,
-                    ServerAPI.instance.places[i]?.get("long")?.toDouble() ?: 0.0
+                    OldServerAPI.instance.data[i]?.get("lat")?.toDouble() ?: 0.0,
+                    OldServerAPI.instance.data[i]?.get("long")?.toDouble() ?: 0.0
                 )
             )
             googleMap.moveCamera(
                 CameraUpdateFactory.newLatLng(
                     LatLng(
-                        ServerAPI.instance.places[i]?.get("lat")?.toDouble() ?: 0.0,
-                        ServerAPI.instance.places[i]?.get("long")?.toDouble() ?: 0.0
+                        OldServerAPI.instance.data[i]?.get("lat")?.toDouble() ?: 0.0,
+                        OldServerAPI.instance.data[i]?.get("long")?.toDouble() ?: 0.0
                     )
                 )
             )
-            googleMap.moveCamera(CameraUpdateFactory.zoomTo(15f))
+            googleMap.moveCamera(CameraUpdateFactory.zoomTo(16f))
 
         }
         val polyline = googleMap.addPolyline(
-            polylineOptions.color(Color.BLUE).width(3f)
+            polylineOptions.color(Color.BLUE).width(10f)
         )
         polyline.startCap = RoundCap()
         polyline.endCap = RoundCap()
@@ -57,7 +59,7 @@ class mapFragment : Fragment() {
 /*
             googleMap.addMarker(
                 MarkerOptions().position(place)
-                    .title(ServerAPI.instance.places[i]?.get("time") ?: "Where are you?")
+                    .title(ServerAPI.instance.data[i]?.get("time") ?: "Where are you?")
                     .zIndex((0.001 * i.toInt()).toFloat())
             )
  */

@@ -1,6 +1,5 @@
 package com.example.prototype
 
-import android.app.Application
 import android.content.Context
 import android.util.Log
 import com.android.volley.Request
@@ -11,27 +10,28 @@ import com.android.volley.toolbox.Volley
 import org.json.JSONObject
 
 
-class Requests constructor(context: Context) {
+object Requests {
+    private val queues = mutableMapOf<Context, RequestQueue>()
 
-    companion object {
-        /*
-@Volatile
-private var INSTANCE: Requests? = null
-fun instance(context: Context) =
-    INSTANCE ?: synchronized(this) {
-        INSTANCE ?: Requests(context).also {
-            INSTANCE = it
+    fun createRequestQueue(context: Context) {
+        if (queues.get(context) == null) {
+            queues[context] = Volley.newRequestQueue(context)
+        } else {
+            Log.d("Requests/createRequestQueue", "Queue is already exists")
         }
+
+        Log.d("Requests/createRequestQueue", "context: $context")
     }
-*/
-        val INSTANCE: Requests by lazy { Requests(Application()) }
-//        val INSTANCE: Requests = Requests(Application())
+
+    fun deleteRequestQueue(context: Context) {
+        queues[context]!!.cancelAll(context)
     }
+
 
     interface ResponseListener {
         // TODO: 01.01.21  replace any with smt better
         fun onResponse(data: Any) {
-            Log.d("Requests/ResponseListener", data::class.toString())
+            Log.d("Requests/ResponseListener", data.toString())
         }
 
         fun onError(errorData: Any) {
@@ -39,7 +39,30 @@ fun instance(context: Context) =
         }
     }
 
-    fun jsonRequest(url: String, jsonData: JSONObject? = null, listener: ResponseListener) {
+    fun simpleRequest(context: Context, url: String, listener: ResponseListener) {
+        val request = JsonObjectRequest(
+            Request.Method.POST,
+            url,
+            null,
+            Response.Listener { response ->
+                listener.onResponse(response)
+            },
+            Response.ErrorListener { error ->
+                listener.onError(error)
+            }
+        )
+        queues[context]!!.add(request)
+        Log.d("Requests/simpleRequest/queue", queues[context].toString())
+
+    }
+
+
+    fun jsonRequest(
+        context: Context,
+        url: String,
+        jsonData: JSONObject? = null,
+        listener: ResponseListener
+    ) {
         val request = JsonObjectRequest(
             Request.Method.POST,
             url,
@@ -51,20 +74,11 @@ fun instance(context: Context) =
                 listener.onError(error)
             }
         )
-        requestQueue.add(request)
+        queues[context]!!.add(request)
 //        if (requestQueue.){}
-        Log.d("Requests/jsonRequest/queue", requestQueue.toString())
+        Log.d("Requests/jsonRequest/queue", queues[context].toString())
 
     }
-
-    private val requestQueue: RequestQueue by lazy {
-        Volley.newRequestQueue(context.applicationContext)
-    }
-
-
-    private fun <T> addToRequestQueue(req: Request<T>) {
-        requestQueue.add(req)
-    }
-
 
 }
+

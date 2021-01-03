@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
                 .setAction("Action", null).show()
         }
         OldServerAPI.instance.drawMap()
-
+        ServerAPI.basicContext = this.applicationContext
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

@@ -10,8 +10,9 @@ class Request {
   public:
     void begin();
     byte connect_to_wifi(char *, String, int);
+    bool connected_wifi();
     byte connect_to_server(char *, unsigned short, int);
-    String send_post(char *, String);
+    char *send_post(char *, String, byte);
   private:
     LWiFiClient client;
 };

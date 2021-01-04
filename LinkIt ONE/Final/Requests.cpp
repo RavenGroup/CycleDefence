@@ -1,6 +1,9 @@
 #include "Requests.h"
 
 
+char response[1024];
+
+
 void Request::begin() {
   LWiFi.begin();
 }
@@ -16,6 +19,11 @@ byte Request::connect_to_wifi(char *wifi_ap, String wifi_password, int retries) 
 }
 
 
+bool Request::connected_wifi() {
+  return LWiFi.status() == LWIFI_STATUS_CONNECTED;
+}
+
+
 byte Request::connect_to_server(char *server_url, unsigned short port, int retries) {
   for (int iter = 0; iter < retries; iter++) {
     if (0 != client.connect(server_url, 80))
@@ -26,7 +34,7 @@ byte Request::connect_to_server(char *server_url, unsigned short port, int retri
 }
 
 
-String Request::send_post(char *server_url, String data) {
+char *Request::send_post(char *server_url, String data, byte retries) {
   if (Serial)
     Serial.println("send HTTP POST request");
   
@@ -45,20 +53,30 @@ String Request::send_post(char *server_url, String data) {
   
   if (Serial)
     Serial.println("waiting HTTP response:");
+
+  byte j = 0;
   while (!client.available()) {
+    if (j == retries) {
+      Serial.println("Can not send request");
+      return "";
+      break;
+    }
     if (Serial)
       Serial.print(".");
     delay(100);
+    j++;
   }
   
   if (Serial)
       Serial.println();
-  
-  String response = "";
+
+  unsigned int i = 0;
   while (client) {
     int v = client.read();
-    if (v != -1)
-      response += (char)v;
+    if (v != -1) {
+      response[i] = (char)v;
+      i++;
+    }
     else {
       Serial.println();
       if (Serial)

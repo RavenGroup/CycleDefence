@@ -1,5 +1,6 @@
 package com.example.prototype
 
+/*
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -24,7 +25,6 @@ class mapFragment : Fragment() {
         } catch (e: Exception) {
             Log.d("Map/Server", e.toString())
         }
-        Log.d("Map/data", OldServerAPI.instance.data.toString())
         val polylineOptions = PolylineOptions()
 
         for (i in OldServerAPI.instance.data.keys) {
@@ -56,13 +56,15 @@ class mapFragment : Fragment() {
 
 
 //            Log.d("Map/Draw", place.toString())
+*/
 /*
             googleMap.addMarker(
                 MarkerOptions().position(place)
                     .title(ServerAPI.instance.data[i]?.get("time") ?: "Where are you?")
                     .zIndex((0.001 * i.toInt()).toFloat())
             )
- */
+ *//*
+
     }
 
 
@@ -80,4 +82,4 @@ class mapFragment : Fragment() {
         mapFragment?.getMapAsync(callback)
     }
 
-}
+}*/

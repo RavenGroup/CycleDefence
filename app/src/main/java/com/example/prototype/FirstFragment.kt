@@ -12,25 +12,26 @@ import kotlinx.android.synthetic.main.fragment_first.*
 class FirstFragment : Fragment() {
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_first, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        ip_address_te.setText(ServerAPI.server)
+        user_id_te.setText(ServerAPI.uid)
 
         log_in_btn.setOnClickListener {
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
-            OldServerAPI.instance.setId(user_id_te.text.toString())
-            OldServerAPI.instance.setUrl(ip_address_te.text.toString())
         }
         showMap.setOnClickListener {
             findNavController().navigate(R.id.action_FirstFragment_to_MapFragment)
-            OldServerAPI.instance.setId(user_id_te.text.toString())
-            OldServerAPI.instance.setUrl(ip_address_te.text.toString())
+        }
+        btnSaveData.setOnClickListener {
+            ServerAPI.setServer(ip_address_te.text.toString())
+            ServerAPI.setUid(user_id_te.text.toString())
         }
     }
 }

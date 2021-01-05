@@ -2,12 +2,19 @@ package com.example.prototype
 
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.android.volley.VolleyError
 import kotlinx.android.synthetic.main.fragment_second.*
+import org.json.JSONArray
+import org.json.JSONObject
 
 
 class SecondFragment : Fragment() {
@@ -26,9 +33,61 @@ class SecondFragment : Fragment() {
         log_out_btn.setOnClickListener {
             findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
         }
-        Requests.createRequestQueue(this.requireContext())
+//        Requests.createRequestQueue(this.requireContext().applicationContext)
         refresh_btn.setOnClickListener {
-            ServerAPI.getAllData(this.requireContext())
+            refresh_btn.isEnabled = false
+            ServerAPI.updateData(listener = object : Requests.ResponseListener {
+                override fun onResponse(data: JSONObject) {
+
+                    Log.d("ServerAPI/update", data.toString())
+                    if (dataOutput == null) return
+
+                    dataOutput.removeAllViews()
+                    var tv: TextView
+                    var layoutHorisontal: LinearLayout
+                    var current: JSONArray
+                    try {
+                        val allData = data.getJSONArray("data")
+
+                        for (i in 0 until allData.length()) {
+                            current = allData.getJSONArray(i)
+                            layoutHorisontal = LinearLayout(dataOutput.context)
+                            layoutHorisontal.orientation = LinearLayout.HORIZONTAL
+                            layoutHorisontal = LinearLayout(dataOutput.context)
+                            layoutHorisontal.orientation = LinearLayout.HORIZONTAL
+                            Log.d("ServerAPI/dataPrint", current.toString())
+                            for (ii in 0..6) {
+//                                    Log.d("ServerAPI/dataPrintII", ii.toString())
+                                tv = TextView(dataOutput.context)
+                                tv.setPaddingRelative(20, 0, 0, 10)
+                                tv.text = current[ii].toString()
+                                layoutHorisontal.addView(tv)
+                            }
+                            dataOutput.addView(layoutHorisontal)
+                        }
+                    } catch (e: Exception) {
+                        Log.e("ServerAPI/updateData", e.toString())
+                    }
+                    refresh_btn.isEnabled = true
+                    Toast.makeText(
+                        this@SecondFragment.context?.applicationContext,
+                        "success!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+                override fun onError(errorData: VolleyError) {
+                    super.onError(errorData)
+                    refresh_btn.isEnabled = true
+                    Toast.makeText(
+                        this@SecondFragment.context?.applicationContext,
+                        "An error has occurred",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                }
+            }
+            )
 
         }
         turnSystemOn.setOnClickListener {

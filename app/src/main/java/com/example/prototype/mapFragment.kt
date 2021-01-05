@@ -1,6 +1,5 @@
 package com.example.prototype
 
-/*
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -14,57 +13,61 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.PolylineOptions
 import com.google.android.gms.maps.model.RoundCap
+import kotlinx.android.synthetic.main.fragment_second.*
+import org.json.JSONArray
+import org.json.JSONObject
 
 class mapFragment : Fragment() {
     //    private var data: Map<String> =
 
 
     private val callback = OnMapReadyCallback { googleMap ->
-        try {
-            OldServerAPI.instance.drawMap()
-        } catch (e: Exception) {
-            Log.d("Map/Server", e.toString())
-        }
+//
+        val lat = 1
+        val lng = 2
+
+
         val polylineOptions = PolylineOptions()
+//        new code
+        ServerAPI.updateData(listener = object : Requests.ResponseListener {
+            override fun onResponse(data: JSONObject) {
 
-        for (i in OldServerAPI.instance.data.keys) {
-//            if (ServerAPI.instance.data[i]?.get("gps_acc").toString() == "V"){
-//                continue
-//            }
-            polylineOptions.add(
-                LatLng(
-                    OldServerAPI.instance.data[i]?.get("lat")?.toDouble() ?: 0.0,
-                    OldServerAPI.instance.data[i]?.get("long")?.toDouble() ?: 0.0
-                )
-            )
-            googleMap.moveCamera(
-                CameraUpdateFactory.newLatLng(
-                    LatLng(
-                        OldServerAPI.instance.data[i]?.get("lat")?.toDouble() ?: 0.0,
-                        OldServerAPI.instance.data[i]?.get("long")?.toDouble() ?: 0.0
+                Log.d("mapFragment/update", data.toString())
+                if (dataOutput == null) return
+
+                var current: JSONArray
+                try {
+                    val allData = data.getJSONArray("data")
+
+                    for (i in 0 until allData.length()) {
+                        current = allData.getJSONArray(i)
+                        Log.d("mapFragment/dataPrint", current.toString())
+                        polylineOptions.add(
+                            LatLng(
+                                current.getDouble(lat),
+                                current.getDouble(lng)
+                            )
+                        )
+                    }
+                    googleMap.moveCamera(
+                        CameraUpdateFactory.newLatLng(
+                            LatLng(
+                                allData.getJSONArray(allData.length() - 1).getDouble(lat),
+                                allData.getJSONArray(allData.length() - 1).getDouble(lng)
+                            )
+                        )
                     )
+                    googleMap.moveCamera(CameraUpdateFactory.zoomTo(16f))
+                } catch (e: Exception) {
+                    Log.e("mapFragment/updateData", e.toString())
+                }
+                val polyline = googleMap.addPolyline(
+                    polylineOptions.color(Color.BLUE).width(10f)
                 )
-            )
-            googleMap.moveCamera(CameraUpdateFactory.zoomTo(16f))
-
-        }
-        val polyline = googleMap.addPolyline(
-            polylineOptions.color(Color.BLUE).width(10f)
-        )
-        polyline.startCap = RoundCap()
-        polyline.endCap = RoundCap()
-
-
-//            Log.d("Map/Draw", place.toString())
-*/
-/*
-            googleMap.addMarker(
-                MarkerOptions().position(place)
-                    .title(ServerAPI.instance.data[i]?.get("time") ?: "Where are you?")
-                    .zIndex((0.001 * i.toInt()).toFloat())
-            )
- *//*
-
+                polyline.startCap = RoundCap()
+                polyline.endCap = RoundCap()
+            }
+        })
     }
 
 
@@ -82,4 +85,4 @@ class mapFragment : Fragment() {
         mapFragment?.getMapAsync(callback)
     }
 
-}*/
+}

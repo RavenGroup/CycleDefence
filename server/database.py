@@ -1,10 +1,9 @@
 from pymongo import MongoClient
-from numpy import fromiter, array
-from json import dumps
 from fastapi import HTTPException
 from CONFIG import NUMBER_OF_PACKAGES, USERNAME, PASSWORD, DB_NAME
 
 MONGO_DETAILS = f"mongodb+srv://{USERNAME}:{PASSWORD}@cluster0.5awly.mongodb.net/{DB_NAME}?retryWrites=true&w=majority"  # connect to mongodb
+
 client = MongoClient(MONGO_DETAILS)
 database = client["BiTech"]  # connect to db
 system = database["system"]  # connect to collection 'system'

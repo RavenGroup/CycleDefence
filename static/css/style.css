@@ -103,8 +103,8 @@ body {
 }
 
 .cloud-box {
-    margin-left: 24%;
-    margin-right: 24%;
+    margin-left: 15%;
+    margin-right: 15%;
     background-color: rgb(235, 235, 235);
     border-radius: 5px;
     margin-bottom: 2%;
@@ -139,7 +139,7 @@ header {
 
     background-color: white;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     /*justify-content: space-between;*/
 }
@@ -153,4 +153,46 @@ header {
 .description {
     background-color: white;
     font-size: 40px;
+}
+
+.img-block-1-1 {
+    width: 90%;
+    border: 2px solid black;
+}
+
+.flex-cloud {
+    display: flex;
+    flex-direction: row;
+}
+
+.person-box {
+    display: flex;
+    flex-direction: row;
+    padding: 2%;
+    background-color: white;
+
+}
+
+.person-box-img {
+    border: 2px solid black;
+}
+
+.column-ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: white;
+}
+
+.more-link {
+    text-decoration: none;
+    color: midnightblue;
+    background-color: white;
+    font-size: 20px;
+}
+.more-link:visited {
+    text-decoration: none;
+}
+.more-link:hover {
+    text-decoration: underline;
 }

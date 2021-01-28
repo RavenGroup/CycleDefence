@@ -2,12 +2,11 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph"
     app:startDestination="@id/FirstFragment">
 
     <fragment
         android:id="@+id/FirstFragment"
-        android:name="com.example.prototype.FirstFragment"
+        android:name="com.example.prototype.layout.FirstFragment"
         android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_first">
 
@@ -20,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
-        android:name="com.example.prototype.SecondFragment"
+        android:name="com.example.prototype.layout.SecondFragment"
         android:label="@string/second_fragment_label"
         tools:layout="@layout/fragment_second">
 
@@ -30,7 +29,7 @@
     </fragment>
     <fragment
         android:id="@+id/MapFragment"
-        android:name="com.example.prototype.mapFragment"
+        android:name="com.example.prototype.layout.mapFragment"
         android:label="@string/map_fragment_label"
         tools:layout="@layout/fragment_map">
 

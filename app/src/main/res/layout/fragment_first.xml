@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FirstFragment">
+    tools:context=".layout.FirstFragment">
 
     <TextView
         android:id="@+id/textView3"
@@ -58,13 +58,10 @@
         app:layout_constraintTop_toBottomOf="@+id/ip_address_te" />
 
     <LinearLayout
-        android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="168dp"
         android:orientation="vertical"
         android:padding="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -88,6 +85,12 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:text="@string/showMap" />
+
+        <Button
+            android:id="@+id/show_data_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/show_data" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

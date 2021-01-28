@@ -1,4 +1,4 @@
-package com.example.prototype
+package com.example.prototype.layout
 
 
 import android.os.Bundle
@@ -12,6 +12,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.android.volley.VolleyError
+import com.example.prototype.R
+import com.example.prototype.Requests
+import com.example.prototype.ServerAPI
 import kotlinx.android.synthetic.main.fragment_second.*
 import org.json.JSONArray
 import org.json.JSONObject
@@ -32,14 +35,19 @@ class SecondFragment : Fragment() {
 
         log_out_btn.setOnClickListener {
             findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
+//            this.activity?.finish()
+//            finish()
+
         }
+// FIX: if fragment is close before server's answer, error will occur
 //        Requests.createRequestQueue(this.requireContext().applicationContext)
         refresh_btn.setOnClickListener {
             refresh_btn.isEnabled = false
-            ServerAPI.updateData(listener = object : Requests.ResponseListener {
-                override fun onResponse(data: JSONObject) {
+            ServerAPI.updateData(listener = object :
+                ServerAPI.DatabaseUpdateListener {
+                override fun onResponse(jsonData: JSONObject) {
 
-                    Log.d("ServerAPI/update", data.toString())
+                    Log.d("ServerAPI/update", jsonData.toString())
                     if (dataOutput == null) return
 
                     dataOutput.removeAllViews()
@@ -47,7 +55,7 @@ class SecondFragment : Fragment() {
                     var layoutHorisontal: LinearLayout
                     var current: JSONArray
                     try {
-                        val allData = data.getJSONArray("data")
+                        val allData = jsonData.getJSONArray("data")
 
                         for (i in 0 until allData.length()) {
                             current = allData.getJSONArray(i)
@@ -55,7 +63,7 @@ class SecondFragment : Fragment() {
                             layoutHorisontal.orientation = LinearLayout.HORIZONTAL
                             layoutHorisontal = LinearLayout(dataOutput.context)
                             layoutHorisontal.orientation = LinearLayout.HORIZONTAL
-                            Log.d("ServerAPI/dataPrint", current.toString())
+//                            Log.d("ServerAPI/dataPrint", current.toString())
                             for (ii in 0..6) {
 //                                    Log.d("ServerAPI/dataPrintII", ii.toString())
                                 tv = TextView(dataOutput.context)
@@ -68,23 +76,42 @@ class SecondFragment : Fragment() {
                     } catch (e: Exception) {
                         Log.e("ServerAPI/updateData", e.toString())
                     }
-                    refresh_btn.isEnabled = true
+                    refresh_btn?.isEnabled = true
                     Toast.makeText(
                         this@SecondFragment.context?.applicationContext,
                         "success!",
                         Toast.LENGTH_SHORT
                     ).show()
+                    super.onResponse(jsonData)
                 }
 
                 override fun onError(errorData: VolleyError) {
-                    super.onError(errorData)
+                    try {
+                        super.onError(errorData)
+                    } catch (e: Requests.UpdateNotNecessary) {
+                        return
+                    }
+                    if (this@SecondFragment.context == null) {
+                        return
+                    }
                     refresh_btn.isEnabled = true
+
                     Toast.makeText(
                         this@SecondFragment.context?.applicationContext,
                         "An error has occurred",
                         Toast.LENGTH_SHORT
                     ).show()
 
+
+                }
+
+                override fun updateNotRequired() {
+                    Toast.makeText(
+                        this@SecondFragment.context?.applicationContext,
+                        "Everything is up to date",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    refresh_btn?.isEnabled = true
                 }
             }
             )

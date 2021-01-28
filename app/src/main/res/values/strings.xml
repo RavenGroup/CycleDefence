@@ -19,4 +19,5 @@
     <string name="turnOn">On</string>
     <string name="turnOff">Off</string>
     <string name="btnSaveDataText">save</string>
+    <string name="show_data">local DB</string>
 </resources>

@@ -1,9 +1,12 @@
-package com.example.prototype
+package com.example.prototype.layout
 
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import com.example.prototype.R
+import com.example.prototype.ServerAPI
+import com.example.prototype.database.DatabaseInstance
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 
@@ -14,10 +17,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(findViewById(R.id.toolbar))
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+            Snackbar.make(view, "go back", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
-        ServerAPI.start(this.applicationContext)
+        DatabaseInstance.context = applicationContext
+        ServerAPI.start(applicationContext)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

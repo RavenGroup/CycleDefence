@@ -14,6 +14,7 @@ class Firebase : FirebaseMessagingService() {
     override fun onNewToken(token: String) {
 //        super.onNewToken(token)
         Log.d(TAG, "New token: $token")
+        ServerAPI.setTokenFCM(token)
 //        sendRegistrationToServer(refreshedToken)
     }
 

@@ -1,6 +1,5 @@
-package com.example.prototype.database
+package com.example.prototype.database.points_core
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.prototype.database.dataclasses.Coordinates
 import kotlinx.coroutines.flow.Flow
@@ -8,10 +7,10 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface PointDao {
     @Query("SELECT * FROM points_table")
-    fun getAllPoints(): LiveData<List<Point>>
+    fun getAllPoints(): Flow<List<Point>>
 
     @Query("SELECT * FROM points_table WHERE ID IN (:ids)")
-    fun loadPointsByIds(ids: IntArray): Flow<List<Point>>
+    fun getPointsByIds(ids: IntArray): Flow<List<Point>>
 
     @Query("SELECT lat, long FROM points_table")
     fun getAllPointsCoordinates(): Flow<List<Coordinates>>

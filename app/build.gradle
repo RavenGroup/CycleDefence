@@ -66,6 +66,9 @@ dependencies {
     kapt "androidx.room:room-compiler:$roomVersion"
     androidTestImplementation "androidx.room:room-testing:$roomVersion"
 
+    // LiveData
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
+
 
     // new realisation ServerAPI
     implementation 'com.android.volley:volley:1.1.1'// android http library

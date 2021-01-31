@@ -1,4 +1,4 @@
 NUMBER_OF_PACKAGES = 500
-USERNAME = 'name'
-PASSWORD = 'password'
-DB_NAME = 'db_name'
+USERNAME = 'lespir'
+PASSWORD = '62195111aon'
+DB_NAME = 'BiTech'  # BiteTechTest

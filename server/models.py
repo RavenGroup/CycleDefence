@@ -11,6 +11,7 @@ class CDSystem(BaseModel):      # data structure for system
     battery: str
     accuracy: str
     speed: str
+    stealing: str
 
 
 class MobileApp(BaseModel):     # data structure for mobile app
@@ -18,5 +19,10 @@ class MobileApp(BaseModel):     # data structure for mobile app
     key: str
 
 
-class SignalingStatus(BaseModel):
+class System_ID(BaseModel):
     id: str
+
+
+class Login(BaseModel):
+    id: str
+    fcm_token: str

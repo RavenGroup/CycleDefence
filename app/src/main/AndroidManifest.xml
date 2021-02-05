@@ -36,7 +36,15 @@
 
         <activity
             android:name=".layout.DataActivity"
-            android:label="Second Activity"
+            android:label="Local DB"
+            android:parentActivityName=".layout.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".layout.MainActivity" />
+        </activity>
+        <activity
+            android:name=".layout.MapActivity"
+            android:label="Map"
             android:parentActivityName=".layout.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

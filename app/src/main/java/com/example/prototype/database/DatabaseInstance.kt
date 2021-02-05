@@ -2,8 +2,6 @@ package com.example.prototype.database
 
 import android.content.Context
 import com.example.prototype.database.points_core.PointDatabase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.SupervisorJob
 
 object DatabaseInstance
 //private constructor()

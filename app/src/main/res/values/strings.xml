@@ -4,7 +4,7 @@
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
-    <string name="log_in">log_in</string>
+    <string name="log_in">OLD requests</string>
     <string name="log_out">log_out</string>
 
     <string name="product_name">Cycle Defence</string>

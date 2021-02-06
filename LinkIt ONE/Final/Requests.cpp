@@ -1,9 +1,6 @@
 #include "Requests.h"
 
 
-char response[1024];
-
-
 void Request::begin() {
   LWiFi.begin();
 }
@@ -71,6 +68,8 @@ char *Request::send_post(char *server_url, String data, byte retries) {
       Serial.println();
 
   unsigned int i = 0;
+  char response[1024];
+  memset(response, '\0', 1024);
   while (client) {
     int v = client.read();
     if (v != -1) {

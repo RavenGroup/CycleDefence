@@ -1,9 +1,24 @@
+#include "Wire.h"
+#include "I2Cdev.h"
+#include "MPU6050.h"
+MPU6050 mpu;
+int16_t ax, ay, az;
+int16_t gx, gy, gz;
 void setup() {
-  pinMode(3, OUTPUT);
-  pinMode(A0, INPUT);
+  Wire.begin();
+  Serial.begin(9600);
+  mpu.initialize();
+  // состояние соединения
+  Serial.println(mpu.testConnection() ? "MPU6050 OK" : "MPU6050 FAIL");
+  delay(1000);
 }
-
-
 void loop() {
-  analogWrite(3, analogRead(A0) / 4);
+  mpu.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
+  Serial.print(ax); Serial.print('\t');
+  Serial.print(ay); Serial.print('\t');
+  Serial.print(az); Serial.print('\t');
+  Serial.print(gx); Serial.print('\t');
+  Serial.print(gy); Serial.print('\t');
+  Serial.println(gz);
+  delay(5);
 }

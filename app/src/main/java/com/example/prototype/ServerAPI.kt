@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
 import com.android.volley.ParseError
+import com.android.volley.TimeoutError
 import com.android.volley.VolleyError
 import com.example.prototype.database.DatabaseInstance
 import com.example.prototype.database.points_core.Point
@@ -70,15 +71,15 @@ object ServerAPI {
                 current = jsonArray.getJSONArray(i)
 //                            Log.d("ServerAPI/jsonDataPrint", current.toString())
                 result.add(
-                    Point(
-                        current.getString(0),
-                        current.getString(1),
-                        current.getString(2).toFloat(),
-                        current.getString(3).toFloat(),
-                        current.getString(4),
-                        current.getInt(5),
-                        current.getString(6).toFloat()
-                    )
+                        Point(
+                                current.getString(0),
+                                current.getString(1),
+                                current.getString(2).toFloat(),
+                                current.getString(3).toFloat(),
+                                current.getString(4),
+                                current.getInt(5),
+                                current.getString(6).toFloat()
+                        )
                 )
             }
             DatabaseInstance.pointDatabase.addPoints(*result.toTypedArray())
@@ -86,7 +87,11 @@ object ServerAPI {
             setKey(jsonData.getString("key"))
             if (jsonData.getString("needMore") == "1") {
                 // TODO: check for recursion error
-                updateData()
+                updateData(object : DatabaseUpdateListener {
+                    override fun updateNotRequired() {}
+
+                    override fun serverIsNotAvailable() {}
+                })
             }
 
             Log.d("$TAG/updateData/onResponse", "FINISH")
@@ -96,14 +101,17 @@ object ServerAPI {
         override fun onError(errorData: VolleyError) {
             if (errorData is ParseError) {
                 updateNotRequired()
-                throw Requests.UpdateNotNecessary()
+//                throw Requests.UpdateNotNecessary()
+            }
+            if (errorData is TimeoutError) {
+                serverIsNotAvailable()
+//                throw Requests.ServerIsNotAvailable()
             }
             Log.e("$TAG/updateData/onError", errorData.toString())
         }
 
-        fun updateNotRequired() {
-            Log.d("$TAG/updateData", "All is up to date")
-        }
+        fun updateNotRequired()
+        fun serverIsNotAvailable()
     }
 
     private val SP: SharedPreferences by lazy {
@@ -117,13 +125,9 @@ object ServerAPI {
         Requests.createRequestQueue(basicContext)
         key = SP.getString("connectionKey", "0") ?: "ERROR"
         uid = SP.getString("userID", "4") ?: "ERROR"
-//        server = SP.getString("connectionKey", "http://37.147.182.252") ?: "ERROR"
         server = SP.getString(
-            "serverIP",
-//            "https://webhook.site/be2f30e7-c238-4ffd-bbed-b2a18d0961c2"
-//            "http://37.147.182.252"
-//            "https://bdirmw.deta.dev"
-            "http://95.30.191.78"
+                "serverIP",
+                "https://884g67.deta.dev"
         ) ?: "ERROR"
         tokenFCM = SP.getString("tokenFCM", "ERROR") ?: "ERROR"
     }
@@ -139,20 +143,20 @@ object ServerAPI {
 
 
     fun updateData(
-        listener: Requests.ResponseListener? = null
+            listener: Requests.ResponseListener
     ) {
         Requests.jsonRequest(
-            basicContext,
-            server + Links.base + Links.updateData,
-            JSONObject("{\"id\": $uid, \"key\": $key}"),
-            listener ?: object : DatabaseUpdateListener {}
+                basicContext,
+                server + Links.base + Links.updateData,
+                JSONObject("{\"id\": $uid, \"key\": $key}"),
+                listener
         )
 
     }
 
     fun turnDefenceSystemOn(
 //        context: Context = basicContext,
-        listener: Requests.ResponseListener = object : Requests.ResponseListener {}
+            listener: Requests.ResponseListener = object : Requests.ResponseListener {}
     ) {
         Requests.simpleRequest(basicContext, server + Links.defenceOn, uid, listener)
 
@@ -160,7 +164,7 @@ object ServerAPI {
 
     fun turnDefenceSystemOff(
 //        context: Context = basicContext,
-        listener: Requests.ResponseListener = object : Requests.ResponseListener {}
+            listener: Requests.ResponseListener = object : Requests.ResponseListener {}
     ) {
         Requests.simpleRequest(basicContext, server + Links.defenceOff, uid, listener)
 
@@ -168,14 +172,14 @@ object ServerAPI {
 
     fun logIn() {
         Requests.jsonRequest(
-            basicContext,
-            server + Links.base + Links.logIn,
-            JSONObject(mapOf("id" to uid, "fcm_token" to tokenFCM)),
-            listener = object : Requests.ResponseListener {
-                override fun onResponse(jsonData: JSONObject) {
-                    Log.d("$TAG/logInt", jsonData.toString())
+                basicContext,
+                server + Links.base + Links.logIn,
+                JSONObject(mapOf("id" to uid, "fcm_token" to tokenFCM)),
+                listener = object : Requests.ResponseListener {
+                    override fun onResponse(jsonData: JSONObject) {
+                        Log.d("$TAG/logInt", jsonData.toString())
+                    }
                 }
-            }
         )
     }
 }

@@ -9,7 +9,6 @@ import com.android.volley.VolleyError
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import org.json.JSONObject
-import java.lang.Exception
 
 
 object Requests {
@@ -83,7 +82,5 @@ object Requests {
         Log.d("Requests/jsonRequest/queue", queues[context].toString())
 
     }
-    class UpdateNotNecessary : Exception()
-
 }
 

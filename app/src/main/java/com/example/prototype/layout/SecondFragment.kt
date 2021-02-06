@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.android.volley.VolleyError
 import com.example.prototype.R
-import com.example.prototype.Requests
 import com.example.prototype.ServerAPI
 import kotlinx.android.synthetic.main.fragment_second.*
 import org.json.JSONArray
@@ -22,8 +21,8 @@ import org.json.JSONObject
 
 class SecondFragment : Fragment() {
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_second, container, false)
     }
@@ -44,9 +43,9 @@ class SecondFragment : Fragment() {
         refresh_btn.setOnClickListener {
             refresh_btn.isEnabled = false
             ServerAPI.updateData(listener = object :
-                ServerAPI.DatabaseUpdateListener {
+                    ServerAPI.DatabaseUpdateListener {
                 override fun onResponse(jsonData: JSONObject) {
-
+                    super.onResponse(jsonData)
                     Log.d("ServerAPI/update", jsonData.toString())
                     if (dataOutput == null) return
 
@@ -78,28 +77,23 @@ class SecondFragment : Fragment() {
                     }
                     refresh_btn?.isEnabled = true
                     Toast.makeText(
-                        this@SecondFragment.context?.applicationContext,
-                        "success!",
-                        Toast.LENGTH_SHORT
+                            this@SecondFragment.context?.applicationContext,
+                            "success!",
+                            Toast.LENGTH_SHORT
                     ).show()
-                    super.onResponse(jsonData)
+
                 }
 
                 override fun onError(errorData: VolleyError) {
-                    try {
-                        super.onError(errorData)
-                    } catch (e: Requests.UpdateNotNecessary) {
-                        return
-                    }
                     if (this@SecondFragment.context == null) {
                         return
                     }
-                    refresh_btn.isEnabled = true
+                    super.onError(errorData)
 
                     Toast.makeText(
-                        this@SecondFragment.context?.applicationContext,
-                        "An error has occurred",
-                        Toast.LENGTH_SHORT
+                            this@SecondFragment.context?.applicationContext,
+                            "An error has occurred",
+                            Toast.LENGTH_SHORT
                     ).show()
 
 
@@ -107,11 +101,20 @@ class SecondFragment : Fragment() {
 
                 override fun updateNotRequired() {
                     Toast.makeText(
-                        this@SecondFragment.context?.applicationContext,
-                        "Everything is up to date",
-                        Toast.LENGTH_SHORT
+                            this@SecondFragment.context?.applicationContext,
+                            "Everything is up to date",
+                            Toast.LENGTH_SHORT
                     ).show()
                     refresh_btn?.isEnabled = true
+                }
+
+                override fun serverIsNotAvailable() {
+                    Toast.makeText(
+                            this@SecondFragment.context?.applicationContext,
+                            "Server is not available",
+                            Toast.LENGTH_SHORT
+                    ).show()
+                    return
                 }
             }
             )

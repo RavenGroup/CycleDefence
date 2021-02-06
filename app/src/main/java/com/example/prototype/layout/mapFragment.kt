@@ -10,7 +10,6 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.example.prototype.R
-import com.example.prototype.Requests
 import com.example.prototype.ServerAPI
 import com.example.prototype.database.DatabaseInstance
 import com.example.prototype.database.dataclasses.Coordinates
@@ -38,6 +37,7 @@ class mapFragment : Fragment() {
             try {
                 ServerAPI.updateData(object : ServerAPI.DatabaseUpdateListener {
                     override fun updateNotRequired() {
+                        if (this@mapFragment.context == null) return
                         Toast.makeText(
                                 this@mapFragment.context?.applicationContext,
                                 "Everything is up to date",
@@ -46,21 +46,15 @@ class mapFragment : Fragment() {
                     }
 
                     override fun serverIsNotAvailable() {
-                        this@mapFragment.context.let{
+                        if (this@mapFragment.context == null) return
                         Toast.makeText(
                                 this@mapFragment.context?.applicationContext,
                                 "Server is not available",
                                 Toast.LENGTH_SHORT
                         ).show()
-                    }}
+                    }
+
                 })
-            } catch (e: Requests.ServerIsNotAvailable) {
-                if (this@mapFragment.context == null) return@setOnClickListener
-                Toast.makeText(
-                        this@mapFragment.context?.applicationContext,
-                        "Server is not available",
-                        Toast.LENGTH_SHORT
-                ).show()
             } catch (e: Exception) {
                 Log.d("mapFragment/update", e.cause.toString())
             }
@@ -68,12 +62,8 @@ class mapFragment : Fragment() {
         }
     }
 
-    //    private var data: Map<String> =
     private val dataFlow: Flow<List<Coordinates>> by lazy { DatabaseInstance.pointDatabase.allCoordinates }
     private lateinit var map: GoogleMap
-
-//    @Volatile
-//    private lateinit var polyline: Polyline
 
     //    @Volatile
     private val polylineOptions by lazy { PolylineOptions() }
@@ -83,41 +73,47 @@ class mapFragment : Fragment() {
     private val callback = OnMapReadyCallback { googleMap ->
         map = googleMap
         polylineOptions.apply {
-            color(Color.BLUE)
+            color(Color.rgb((0..256).random(), (0..256).random(), (0..256).random()))
             width(10f)
             startCap(RoundCap())
             endCap(RoundCap())
         }
-        map.moveCamera(CameraUpdateFactory.zoomBy(14f))
         displayData()
         refreshButton.isVisible = true
     }
 
 
     private fun displayData() = CoroutineScope(Dispatchers.IO).launch {
+        Log.d("$TAG/Scope", this.toString())
         dataFlow.collect {
-            if (it.isEmpty()) return@collect
-            Log.d("$TAG/displayData/dataReceivedFromDB", "Coordinates count:" + it.size.toString())
-
             if (this@mapFragment.context == null) {
                 cancel()
             }
-            CoroutineScope(Dispatchers.Main).launch { map.clear()}
-
+            if (it.isEmpty()) {
+                CoroutineScope(Dispatchers.Main).launch {
+                    Toast.makeText(this@mapFragment.context, "Please refresh", Toast.LENGTH_SHORT).show()
+                }
+                return@collect
+            }
+            Log.d("$TAG/displayData/dataReceivedFromDB", "Coordinates count:" + it.size.toString())
+//            (polylineOptions.points.size - 1)..it.size) TODO dynamic appending new points
+            polylineOptions.points.clear()
             polylineOptions.addAll(
                     it.map { coord -> LatLng(coord.lat, coord.lng) }
             )
-            CoroutineScope(Dispatchers.Main).launch {
 
-                val polyline = map.addPolyline(polylineOptions)
+            CoroutineScope(Dispatchers.Main).launch {
+                map.clear()
+                map.addPolyline(polylineOptions)
                 map.animateCamera(
-                        CameraUpdateFactory.newLatLng(
+                        CameraUpdateFactory.newLatLngZoom(
                                 LatLng(
                                         it.last().lat,
                                         it.last().lng
-                                )
+                                ), 14f
                         )
                 )
+
             }
 
         }

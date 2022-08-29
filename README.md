@@ -1,8 +1,13 @@
 # CycleDefence
 
+# Important
+__developing of the this project was stopped in 2020 :( __
+New commits only organize code to make it easier to read
+
 # Info
 Defence system for Bicycles (or any transport :) )
-Track your wehicle and stay safe with system
+Track your vehicle and stay safe with system
+
 
 ## Folders
 - `./android` source code for android 

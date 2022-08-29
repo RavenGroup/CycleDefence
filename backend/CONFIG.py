@@ -1,0 +1,4 @@
+NUMBER_OF_PACKAGES = 500
+USERNAME = 'lespir'
+PASSWORD = '62195111aon'
+DB_NAME = 'BiTech'  # BiteTechTest
